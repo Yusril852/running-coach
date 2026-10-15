@@ -1,0 +1,1098 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Garis Finis</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Konsep: lembar start-list lomba. Sesi hari ini tampil sebagai nomor dada (bib), pace sebagai split. */
+:root {
+  --bg: #EDF0F4; --surface: #FFFFFF; --surface-2: #F5F7FA; --ink: #0F1B2D; --muted: #566377; --line: #D3D9E2;
+  --accent: #1B3BFF; --accent-ink: #FFFFFF; --accent-soft: #E3E8FF;
+  --z-e: #13825F; --z-m: #1B6FD1; --z-t: #9A6A00; --z-i: #C8480F; --z-r: #B8203F; --z-rp: #0F1B2D; --z-rest: #566377;
+  --good: #13825F; --warn: #9A6A00; --bad: #B8203F; --info: #1B6FD1;
+  --f-display: 'Big Shoulders Display', 'Arial Narrow', Impact, sans-serif;
+  --f-body: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-mono: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0B1018; --surface: #141B27; --surface-2: #1A2331; --ink: #E7ECF3; --muted: #93A0B3; --line: #273245;
+    --accent: #7C92FF; --accent-ink: #0B1018; --accent-soft: #1E2748;
+    --z-e: #3CC79A; --z-m: #5BA2FF; --z-t: #E8B23A; --z-i: #FF7F4D; --z-r: #FF6B8B; --z-rp: #E7ECF3; --z-rest: #93A0B3;
+    --good: #3CC79A; --warn: #E8B23A; --bad: #FF6B8B; --info: #5BA2FF;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0B1018; --surface: #141B27; --surface-2: #1A2331; --ink: #E7ECF3; --muted: #93A0B3; --line: #273245;
+  --accent: #7C92FF; --accent-ink: #0B1018; --accent-soft: #1E2748;
+  --z-e: #3CC79A; --z-m: #5BA2FF; --z-t: #E8B23A; --z-i: #FF7F4D; --z-r: #FF6B8B; --z-rp: #E7ECF3; --z-rest: #93A0B3;
+  --good: #3CC79A; --warn: #E8B23A; --bad: #FF6B8B; --info: #5BA2FF;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.5; -webkit-text-size-adjust: 100%; }
+.app { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 14px 56px; }
+.wrap { max-width: 1040px; margin: 0 auto; }
+h1, h2, h3, p { margin: 0; }
+h2 { font-family: var(--f-display); font-weight: 800; font-size: 1.7rem; line-height: 1.05; letter-spacing: .01em; text-transform: uppercase; text-wrap: balance; }
+h3 { font-size: 1rem; font-weight: 700; }
+button, input, select { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.num, .mono { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+.muted { color: var(--muted); }
+.small { font-size: .85rem; }
+.lbl { font-size: .72rem; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); }
+
+/* header + tabs */
+.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 6px 12px; }
+.brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.brand svg { flex: none; }
+.wm { font-family: var(--f-display); font-weight: 800; font-size: 1.9rem; letter-spacing: .06em; line-height: 1; white-space: nowrap; }
+.hdr-meta { text-align: right; font-size: .8rem; color: var(--muted); line-height: 1.25; }
+.hdr-meta b { color: var(--ink); font-family: var(--f-mono); font-weight: 500; }
+.tabs { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; display: flex; gap: 4px; overflow-x: auto; background: var(--bg); border-bottom: 1px solid var(--line); scrollbar-width: none; margin-bottom: 18px; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab { flex: none; background: none; border: 0; border-bottom: 3px solid transparent; padding: 11px 14px 9px; font-weight: 600; font-size: .95rem; color: var(--muted); cursor: pointer; white-space: nowrap; }
+.tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.tab:hover { color: var(--ink); }
+
+/* generic */
+.stack { display: flex; flex-direction: column; gap: 18px; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 18px; align-items: start; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px; min-width: 0; }
+.card > h2 { margin-bottom: 12px; }
+.card > h2 + .small, .card > p.small { margin-top: -6px; margin-bottom: 12px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 10px 18px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); font-weight: 600; cursor: pointer; }
+.btn:hover { border-color: var(--ink); }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn.primary:hover { filter: brightness(1.08); }
+.btn.danger { color: var(--bad); border-color: var(--bad); }
+.btn.sm { min-height: 34px; padding: 4px 12px; font-size: .85rem; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+.strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); border-block: 1px solid var(--ink); margin-bottom: 18px; }
+.strip > div { padding: 10px 14px 10px 0; min-width: 0; }
+.strip .v { font-weight: 700; font-size: 1.02rem; }
+.strip .v small { font-weight: 500; color: var(--muted); font-size: .8rem; }
+
+.notice { border: 1px dashed var(--muted); border-radius: 10px; padding: 12px 14px; display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; background: var(--surface); }
+.notice p { flex: 1 1 260px; }
+
+/* zone pills */
+.z-E { --z: var(--z-e); } .z-M { --z: var(--z-m); } .z-T { --z: var(--z-t); } .z-I { --z: var(--z-i); }
+.z-R { --z: var(--z-r); } .z-RP { --z: var(--z-rp); } .z-rest { --z: var(--z-rest); }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px; border-radius: 999px; font-size: .75rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--z); background: color-mix(in srgb, var(--z) 12%, var(--surface)); border: 1px solid color-mix(in srgb, var(--z) 38%, transparent); white-space: nowrap; }
+
+/* bib */
+.bib { position: relative; background: var(--surface); border: 2px solid var(--ink); border-radius: 6px; overflow: hidden; }
+.bib-head { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 9px 44px; background: var(--ink); color: var(--bg); font-size: .78rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+.pin { position: absolute; width: 12px; height: 12px; border-radius: 50%; background: var(--bg); border: 2px solid var(--ink); }
+.pin.a { top: 9px; left: 12px; } .pin.b { top: 9px; right: 12px; } .pin.c { bottom: 9px; left: 12px; } .pin.d { bottom: 9px; right: 12px; }
+.bib-body { padding: 18px 44px 22px; display: grid; grid-template-columns: auto 1fr; gap: 6px 28px; align-items: center; }
+.bib-num { display: flex; align-items: baseline; gap: 8px; font-family: var(--f-display); font-weight: 800; line-height: .85; }
+.bib-num .n { font-size: clamp(76px, 20vw, 140px); letter-spacing: -.01em; }
+.bib-num .u { font-size: 1.6rem; letter-spacing: .08em; color: var(--muted); }
+.bib-info { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.bib-info h2 { font-size: clamp(1.7rem, 5vw, 2.4rem); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; background: var(--surface-2); }
+.chip span { font-size: .66rem; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); }
+.chip b { font-family: var(--f-mono); font-weight: 500; font-size: 1.05rem; }
+.chip i { font-style: normal; font-size: .75rem; color: var(--muted); }
+.bib-foot { padding: 0 44px 22px; display: flex; flex-direction: column; gap: 14px; }
+.steps { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.steps li { display: grid; grid-template-columns: 22px 1fr; gap: 8px; }
+.steps li::before { content: ""; width: 8px; height: 8px; margin: .52em 0 0 7px; background: var(--ink); transform: rotate(45deg); }
+.why { color: var(--muted); font-size: .92rem; }
+@media (max-width: 560px) {
+  .bib-head, .bib-body, .bib-foot { padding-left: 38px; padding-right: 38px; }
+  .bib-body { grid-template-columns: 1fr; }
+}
+
+.logged { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; font-size: .92rem; }
+.logged b { color: var(--good); }
+
+/* alerts */
+.alerts { display: flex; flex-direction: column; gap: 10px; }
+.alert { border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; background: var(--surface-2); display: grid; gap: 4px; }
+.alert .tag { font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--c); }
+.alert.bad { --c: var(--bad); border-color: var(--bad); } .alert.warn { --c: var(--warn); border-color: var(--warn); }
+.alert.info { --c: var(--info); } .alert.good { --c: var(--good); }
+.alert b { font-size: 1rem; }
+.alert p { font-size: .92rem; color: var(--muted); }
+
+/* week strip */
+.week7 { display: grid; grid-template-columns: repeat(7, minmax(112px, 1fr)); gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+.day7 { border: 1px solid var(--line); border-radius: 10px; padding: 10px; background: var(--surface); display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.day7.today { border: 2px solid var(--ink); }
+.day7 .d { font-size: .72rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.day7 .km { font-family: var(--f-display); font-weight: 800; font-size: 1.8rem; line-height: 1; }
+.day7 .km small { font-size: .85rem; color: var(--muted); letter-spacing: .06em; }
+.day7 .pill { align-self: flex-start; font-size: .66rem; padding: 1px 8px; }
+.prog { height: 10px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--line); overflow: hidden; }
+.prog i { display: block; height: 100%; background: var(--accent); }
+
+/* volume chart */
+.vol { display: grid; grid-template-columns: 34px 1fr; grid-template-rows: 170px auto; gap: 4px 6px; }
+.vol-y { display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; font-family: var(--f-mono); font-size: .7rem; color: var(--muted); line-height: 1; }
+.vol-plot { position: relative; border-bottom: 1px solid var(--ink); }
+.vol-grid { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between; pointer-events: none; }
+.vol-grid i { border-top: 1px solid var(--line); }
+.vol-grid i:last-child { border-top: 0; }
+.vol-bars { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(var(--n), 1fr); gap: 3px; align-items: stretch; }
+.vcol { position: relative; display: flex; align-items: flex-end; justify-content: center; min-width: 0; }
+.vcol .p { display: block; width: 100%; background: color-mix(in srgb, var(--accent) 22%, var(--surface)); border-radius: 2px 2px 0 0; }
+.vcol .a { position: absolute; bottom: 0; width: 56%; background: var(--accent); border-radius: 2px 2px 0 0; }
+.vcol.only-a .a { width: 70%; }
+.vcol.cur::after { content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 3px; background: var(--ink); }
+.vcol.race .p { background: var(--ink); }
+.vcol.cutw .p { background: color-mix(in srgb, var(--accent) 10%, var(--surface)); border: 1px dashed color-mix(in srgb, var(--accent) 50%, transparent); border-bottom: 0; }
+.vol-x { grid-column: 2; display: grid; grid-template-columns: repeat(var(--n), 1fr); gap: 3px; font-family: var(--f-mono); font-size: .66rem; color: var(--muted); text-align: center; min-height: 14px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: .8rem; color: var(--muted); margin-top: 10px; }
+.legend span::before { content: ""; display: inline-block; width: 12px; height: 12px; margin-right: 6px; vertical-align: -1px; border-radius: 2px; background: var(--c); }
+.ribbon { display: flex; gap: 3px; margin-bottom: 14px; }
+.ribbon div { padding: 6px 8px; border-radius: 4px; background: var(--surface-2); border: 1px solid var(--line); font-size: .72rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.ribbon .ph-base { background: color-mix(in srgb, var(--z-m) 12%, var(--surface)); }
+.ribbon .ph-build { background: color-mix(in srgb, var(--z-t) 14%, var(--surface)); }
+.ribbon .ph-peak { background: color-mix(in srgb, var(--z-i) 14%, var(--surface)); }
+.ribbon .ph-taper { background: color-mix(in srgb, var(--z-e) 14%, var(--surface)); }
+
+/* week list */
+details.wk { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+details.wk + details.wk { margin-top: 8px; }
+details.wk > summary { list-style: none; cursor: pointer; padding: 12px 14px; display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; }
+details.wk > summary::-webkit-details-marker { display: none; }
+details.wk > summary::before { content: "+"; font-family: var(--f-mono); width: 14px; color: var(--muted); }
+details.wk[open] > summary::before { content: "–"; }
+details.wk[open] > summary { border-bottom: 1px solid var(--line); }
+.wk-t { font-weight: 700; } .wk-km { margin-left: auto; font-family: var(--f-mono); }
+.badge { font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 1px 8px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
+.badge.now { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.wk-days { display: flex; flex-direction: column; }
+.day { display: grid; grid-template-columns: 58px 1fr; gap: 12px; padding: 12px 14px; border-top: 1px solid var(--line); }
+.day:first-child { border-top: 0; }
+.day.today { background: var(--accent-soft); }
+.day .dn { font-size: .72rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); line-height: 1.3; }
+.day .dn b { display: block; font-family: var(--f-display); font-size: 1.5rem; color: var(--ink); letter-spacing: 0; line-height: 1; }
+.day .db { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.day .hd { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: center; }
+.day ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: .9rem; }
+.day.rest .hd b { color: var(--muted); font-weight: 500; }
+
+/* tables */
+.tw { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+th { text-align: left; font-size: .7rem; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); padding: 6px 10px 8px 0; border-bottom: 1px solid var(--ink); white-space: nowrap; }
+td { padding: 10px 10px 10px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+td.num, th.num { text-align: right; padding-right: 14px; white-space: nowrap; }
+.zbadge { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 6px; background: var(--z); color: var(--surface); font-family: var(--f-display); font-weight: 800; font-size: 1.2rem; }
+.zrow { display: grid; grid-template-columns: 30px 1fr; gap: 12px; padding: 12px 0; border-top: 1px solid var(--line); }
+.zrow:first-of-type { border-top: 0; }
+.zrow .zh { display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: baseline; }
+.zrow .zp { font-family: var(--f-mono); font-size: 1.15rem; }
+.bigv { font-family: var(--f-display); font-weight: 800; font-size: 3.6rem; line-height: .9; }
+
+/* forms */
+.form { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr)); gap: 14px; }
+.form .full { grid-column: 1 / -1; }
+.form label { display: flex; flex-direction: column; gap: 5px; font-size: .85rem; font-weight: 600; min-width: 0; }
+.form label small { font-weight: 400; color: var(--muted); }
+input, select { width: 100%; min-height: 44px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+input[type="range"] { padding: 0; min-height: 32px; accent-color: var(--accent); }
+textarea { width: 100%; min-height: 110px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); font-family: var(--f-mono); font-size: .8rem; color: var(--ink); }
+.err { color: var(--bad); font-size: .9rem; font-weight: 600; min-height: 0; }
+.err:empty { display: none; }
+.rpe-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; }
+.rpe-row output { font-family: var(--f-mono); font-size: 1.1rem; min-width: 2ch; text-align: right; }
+
+/* log list */
+.log { display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; padding: 12px 0; border-top: 1px solid var(--line); }
+.log:first-of-type { border-top: 0; }
+.log .l1 { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; min-width: 0; }
+.log .km { font-family: var(--f-display); font-weight: 800; font-size: 1.6rem; line-height: 1; }
+.log .meta { grid-column: 1 / -1; font-size: .86rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 2px 14px; }
+.log .del { align-self: start; }
+.ok-t { color: var(--good); } .fast-t { color: var(--warn); }
+
+#toast { position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 20px); max-width: min(92vw, 520px); background: var(--ink); color: var(--bg); padding: 12px 18px; border-radius: 10px; font-size: .92rem; font-weight: 500; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; z-index: 20; }
+#toast.show { opacity: 1; transform: translate(-50%, 0); }
+@media (prefers-reduced-motion: reduce) { #toast { transition: none; } }
+
+.foot { margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--line); font-size: .82rem; color: var(--muted); display: grid; gap: 6px; }
+
+.pout { display: grid; gap: 4px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface-2); }
+.pout .big { font-family: var(--f-display); font-weight: 800; font-size: 3.2rem; line-height: .95; font-variant-numeric: tabular-nums; }
+h2 small { font-family: var(--f-body); font-weight: 500; font-size: .85rem; letter-spacing: 0; text-transform: none; }
+</style>
+<div class="app"><div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <svg width="36" height="26" viewBox="0 0 36 26" aria-hidden="true"><path d="M0 4h26M0 13h26M0 22h26" stroke="currentColor" stroke-width="3" fill="none"/><rect x="28" y="0" width="8" height="26" fill="var(--accent)"/></svg>
+      <span class="wm">GARIS FINIS</span>
+    </div>
+    <div class="hdr-meta" id="hdr-meta"></div>
+  </header>
+  <nav class="tabs" id="tabs" role="tablist" aria-label="Bagian aplikasi"></nav>
+  <main id="view"></main>
+  <footer class="foot">
+    <p>Zona dan prediksi memakai VDOT (Daniels &amp; Gilbert). Rencana memakai periodisasi bertahap: fondasi, pengembangan, spesifik, tapering, dengan minggu pemulihan tiap empat minggu.</p>
+    <p>Ini alat bantu latihan, bukan pengganti pelatih bersertifikat atau dokter. Hentikan latihan dan periksakan diri bila ada nyeri dada, pusing, sesak yang tidak wajar, atau nyeri tajam yang menetap.</p>
+  </footer>
+</div></div>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+/* ===== LOGIKA PELATIH (fungsi murni, tanpa DOM) ===== */
+const DIST = { '5k': 5, '10k': 10, 'hm': 21.0975, 'mar': 42.195 };
+const GOAL_NAME = { '5k': '5K', '10k': '10K', 'hm': 'Half Marathon', 'mar': 'Marathon' };
+const ZONE_NAME = { E: 'Easy', M: 'Maraton', T: 'Tempo', I: 'Interval', R: 'Repetisi' };
+const PHASE_NAME = { base: 'Fondasi', build: 'Pengembangan', peak: 'Spesifik', taper: 'Tapering' };
+
+/* ---------- waktu, pace, format ---------- */
+function parseTime(str) {
+  if (typeof str === 'number') return str;
+  const s = String(str == null ? '' : str).trim().replace(',', '.');
+  if (!s) return NaN;
+  const parts = s.split(':').map(Number);
+  if (parts.some(n => !isFinite(n) || n < 0)) return NaN;
+  if (parts.length === 1) return parts[0] * 60;
+  if (parts.length === 2) return parts[0] * 60 + parts[1];
+  if (parts.length === 3) return parts[0] * 3600 + parts[1] * 60 + parts[2];
+  return NaN;
+}
+function fmtTime(sec) {
+  sec = Math.round(sec);
+  const h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = sec % 60;
+  const pad = n => String(n).padStart(2, '0');
+  return h > 0 ? h + ':' + pad(m) + ':' + pad(s) : m + ':' + pad(s);
+}
+function fmtPace(secPerKm) { return fmtTime(secPerKm); }
+function fk(x) { return (Math.round(x * 10) / 10).toString().replace('.', ','); }
+const r05 = x => Math.round(x * 2) / 2;
+const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+
+/** Pace per km wajar untuk manusia: 2:30 sampai 12:00. */
+function checkEffort(km, sec) {
+  if (!isFinite(km) || km <= 0) return 'Jarak harus lebih dari 0.';
+  if (!isFinite(sec) || sec <= 0) return 'Waktu tidak terbaca. Tulis seperti 52:30 atau 1:45:00.';
+  const pace = sec / km;
+  if (pace < 150) return 'Pace lebih cepat dari 2:30 /km. Periksa jarak dan waktu. Untuk jam, tulis 1:45:00.';
+  if (pace > 720) return 'Pace lebih lambat dari 12:00 /km. Periksa waktu. Untuk jam, tulis 1:45:00.';
+  return null;
+}
+function stdKey(km) {
+  for (const k in DIST) if (Math.abs(km - DIST[k]) / DIST[k] <= 0.03) return k;
+  return null;
+}
+
+/* ---------- tanggal (lokal, tanpa geser zona waktu) ---------- */
+function ymd(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+function parseYmd(s) { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); }
+function addDays(d, n) { return new Date(d.getFullYear(), d.getMonth(), d.getDate() + n); }
+function mondayOf(d) { const x = new Date(d.getFullYear(), d.getMonth(), d.getDate()); return addDays(x, -((x.getDay() + 6) % 7)); }
+function dayDiff(a, b) { return Math.round((Date.UTC(b.getFullYear(), b.getMonth(), b.getDate()) - Date.UTC(a.getFullYear(), a.getMonth(), a.getDate())) / 86400000); }
+
+/* ---------- VDOT (Daniels & Gilbert) ---------- */
+function vo2AtVel(v) { return -4.60 + 0.182258 * v + 0.000104 * v * v; }
+function velAtVo2(vo2) { const a = 0.000104, b = 0.182258, c = -4.60 - vo2; return (-b + Math.sqrt(b * b - 4 * a * c)) / (2 * a); }
+function pctMax(tMin) { return 0.8 + 0.1894393 * Math.exp(-0.012778 * tMin) + 0.2989558 * Math.exp(-0.1932605 * tMin); }
+function vdotFromRace(km, sec) { const t = sec / 60; return vo2AtVel(km * 1000 / t) / pctMax(t); }
+function predictTime(vdot, km) {
+  let lo = km * 2, hi = km * 15; // menit
+  for (let i = 0; i < 60; i++) {
+    const mid = (lo + hi) / 2;
+    if (vdotFromRace(km, mid * 60) > vdot) lo = mid; else hi = mid;
+  }
+  return ((lo + hi) / 2) * 60;
+}
+function paceAt(vdot, frac) { return 1000 / velAtVo2(vdot * frac) * 60; }
+function zonesFor(vdot) {
+  return {
+    E: { lo: paceAt(vdot, 0.70), hi: paceAt(vdot, 0.60) }, // lo = lebih cepat
+    M: { p: predictTime(vdot, 42.195) / 42.195 },
+    T: { p: paceAt(vdot, 0.88) },
+    I: { p: paceAt(vdot, 0.975) },
+    R: { p: paceAt(vdot, 1.07) }
+  };
+}
+function hrMaxOf(age, manual) {
+  if (manual && manual >= 120 && manual <= 230) return Math.round(manual);
+  if (age && age >= 10 && age <= 90) return Math.round(208 - 0.7 * age);
+  return null;
+}
+const HR_PCT = { E: [0.65, 0.79], M: [0.80, 0.85], T: [0.85, 0.90], I: [0.95, 1.0] };
+function hrRange(zone, max) { return max && HR_PCT[zone] ? [Math.round(max * HR_PCT[zone][0]), Math.round(max * HR_PCT[zone][1])] : null; }
+
+/** VDOT efektif: terbaik dalam 90 hari terakhir, atau yang terbaru bila tidak ada. */
+function effectiveVdot(profile, logs, today) {
+  const c = [];
+  const refSec = parseTime(profile.refTime);
+  if (isFinite(refSec) && DIST[profile.refKey]) {
+    c.push({ vdot: vdotFromRace(DIST[profile.refKey], refSec), date: profile.refDate || ymd(today), label: GOAL_NAME[profile.refKey] + ' ' + fmtTime(refSec) });
+  }
+  (logs || []).forEach(l => {
+    if (l.type === 'race' && l.km >= 1.5 && l.sec > 0) c.push({ vdot: vdotFromRace(l.km, l.sec), date: l.date, label: fk(l.km) + ' km ' + fmtTime(l.sec) });
+  });
+  if (!c.length) return { vdot: 35, date: ymd(today), label: 'perkiraan awal' };
+  const recent = c.filter(x => { const dd = dayDiff(parseYmd(x.date), today); return dd >= 0 && dd <= 90; });
+  let pick;
+  if (recent.length) pick = recent.reduce((a, b) => b.vdot > a.vdot ? b : a);
+  else pick = c.reduce((a, b) => b.date > a.date ? b : a);
+  return { vdot: clamp(pick.vdot, 25, 80), date: pick.date, label: pick.label };
+}
+
+/** Analisis target waktu vs kemampuan sekarang. */
+function goalAnalysis(vdot, goal, targetSec) {
+  const gk = DIST[goal];
+  const pred = predictTime(vdot, gk);
+  if (!isFinite(targetSec) || targetSec <= 0) return { pred, hasTarget: false };
+  const gap = (pred - targetSec) / pred; // positif = target lebih cepat
+  let verdict, level;
+  if (gap <= 0.005) { verdict = 'Target sudah dalam jangkauan. Fokus pada pacing dan konsistensi.'; level = 'good'; }
+  else if (gap <= 0.02) { verdict = 'Realistis dengan satu siklus latihan yang konsisten.'; level = 'good'; }
+  else if (gap <= 0.04) { verdict = 'Menantang tapi mungkin, butuh latihan konsisten dan lomba yang pas.'; level = 'info'; }
+  else if (gap <= 0.07) { verdict = 'Agresif untuk satu siklus. Tetapkan target antara agar tidak memaksa.'; level = 'warn'; }
+  else { verdict = 'Terlalu jauh untuk satu siklus. Bagi menjadi dua tahap.'; level = 'bad'; }
+  const interimSec = gap > 0.03 ? pred * (1 - 0.03) : null;
+  return { pred, hasTarget: true, gap, verdict, level, interimSec, needVdot: vdotFromRace(gk, targetSec) };
+}
+
+/* ---------- pembuat sesi ---------- */
+function mk(type, title, km, steps, zone, why) { return { type, title, km: r05(km), steps, zone, why }; }
+const WU = 'Pemanasan 2 km santai + 4 strides 20 dtk';
+const CD = 'Pendinginan 1,5 km santai';
+
+function repsFor(workKm, opts, minN, maxN) {
+  for (const d of opts) { const n = Math.round(workKm * 1000 / d); if (n >= minN && n <= maxN) return { d, n }; }
+  const d = opts[opts.length - 1];
+  return { d, n: Math.max(2, Math.round(workKm * 1000 / d)) };
+}
+function easyRange(Z) { return fmtPace(Z.E.lo) + '–' + fmtPace(Z.E.hi); }
+
+function easySession(km, Z, strides, recovery) {
+  const steps = [fk(km) + ' km santai di pace ' + easyRange(Z) + ' /km. Napas harus cukup untuk bicara satu kalimat penuh.'];
+  if (strides) steps.push('Akhiri dengan 6 × 20 detik strides (cepat tapi rileks), jalan 60 detik antar strides.');
+  const t = recovery ? 'Lari pemulihan' : (strides ? 'Santai + strides' : 'Lari santai');
+  return mk(recovery ? 'recovery' : 'easy', t, km, steps, 'E',
+    recovery ? 'Melonggarkan kaki setelah sesi panjang. Pelan itu disengaja.' : 'Membangun kapasitas aerobik dan kekuatan tendon tanpa beban berlebih.');
+}
+function fartlekSession(km, Z) {
+  const n = clamp(Math.round((km - 3.5) / 0.4), 6, 14);
+  return mk('fartlek', 'Fartlek 1/1', km,
+    [WU, n + ' × (1 menit cepat di effort sekitar pace I ' + fmtPace(Z.I.p) + ' /km, 1 menit jog santai)', CD], 'I',
+    'Mengenalkan tubuh pada kecepatan tanpa tekanan jam. Cocok untuk fase awal.');
+}
+function tempoSession(km, Z, goal) {
+  const capW = { '5k': 6, '10k': 8, 'hm': 10, 'mar': 12 }[goal];
+  const tw = Math.min(capW, r05(Math.max(2, km - 3.5)));
+  const steps = [WU];
+  if (tw >= 6) {
+    const segs = tw >= 9 ? 3 : 2, each = r05(tw / segs);
+    steps.push(segs + ' × ' + fk(each) + ' km @ pace T ' + fmtPace(Z.T.p) + ' /km, jog 1 menit antar repetisi');
+  } else {
+    steps.push(fk(tw) + ' km menerus @ pace T ' + fmtPace(Z.T.p) + ' /km (napas berat tapi terkontrol)');
+  }
+  steps.push(CD);
+  return mk('tempo', tw >= 6 ? 'Tempo bersela' : 'Tempo', tw + 3.5, steps, 'T',
+    'Menaikkan ambang laktat: pace yang bisa ditahan lama ikut naik.');
+}
+function intervalSession(km, Z, longReps) {
+  const w = Math.max(2, (km - 3.5) * 0.8);
+  const { d, n } = repsFor(w, longReps ? [1600, 1200, 1000] : [1000, 800, 600, 400], 3, 8);
+  const per = Z.I.p * d / 1000;
+  return mk('interval', 'Interval ' + d + ' m', km, [WU,
+    n + ' × ' + d + ' m @ pace I ' + fmtPace(Z.I.p) + ' /km (sekitar ' + fmtTime(per) + ' per repetisi)',
+    'Pemulihan jog santai ' + (d >= 1000 ? '2–3 menit' : '90 detik – 2 menit') + ' antar repetisi', CD], 'I',
+    'Menaikkan VO₂max: batas atas mesin aerobik Anda.');
+}
+function rpSession(km, Z, RP, goal) {
+  const work = Math.max(2, km - 3.5);
+  const unit = goal === 'hm' ? 2 : (work >= 6 ? 1.6 : 1);
+  const n = Math.max(2, Math.round(work / unit));
+  return mk('racepace', 'Pace lomba ' + GOAL_NAME[goal], km, [WU,
+    n + ' × ' + fk(unit) + ' km @ pace lomba ' + fmtPace(RP) + ' /km, istirahat jog ' + (unit >= 2 ? '2 menit' : '90 detik'), CD], 'RP',
+    'Melatih tubuh dan kepala pada pace yang akan dipakai di hari lomba.');
+}
+function sharpenerSession(km, Z, RP) {
+  const n = clamp(Math.round(Math.max(2, km - 3.5)), 2, 4);
+  return mk('racepace', 'Penajaman', km, [WU,
+    n + ' × 1 km @ pace lomba ' + fmtPace(RP) + ' /km, istirahat jog 2 menit', CD], 'RP',
+    'Volume turun, ketajaman tetap. Kaki harus terasa ringan setelahnya.');
+}
+function mediumLongSession(km, Z, RP, phase, goal) {
+  const steps = [];
+  if (phase === 'peak') {
+    const mp = Math.max(3, Math.round(Math.min(km * 0.5, goal === 'mar' ? 8 : 6)));
+    steps.push(fk(km - mp) + ' km santai di pace ' + easyRange(Z) + ' /km');
+    steps.push(mp + ' km terakhir @ pace ' + (goal === 'mar' ? 'maraton' : 'half marathon') + ' ' + fmtPace(RP) + ' /km');
+  } else {
+    steps.push(fk(km) + ' km santai di pace ' + easyRange(Z) + ' /km');
+    steps.push('Boleh bertahap lebih cepat di 2 km terakhir bila terasa ringan.');
+  }
+  return mk('medium', 'Lari menengah-panjang', km, steps, 'E',
+    'Menambah volume aerobik di tengah minggu tanpa mengorbankan sesi panjang.');
+}
+function longSession(km, Z, RP, phase, goal, cut) {
+  const steps = [];
+  const special = (goal === 'hm' || goal === 'mar') && !cut && phase !== 'base' && phase !== 'taper';
+  if (special) {
+    const mp = Math.round(phase === 'build' ? Math.min(km * 0.25, goal === 'mar' ? 10 : 6) : Math.min(km * 0.4, goal === 'mar' ? 16 : 8));
+    if (mp >= 3) {
+      steps.push(fk(km - mp) + ' km santai di pace ' + easyRange(Z) + ' /km');
+      steps.push(mp + ' km terakhir @ pace ' + (goal === 'mar' ? 'maraton' : 'half marathon') + ' ' + fmtPace(RP) + ' /km');
+    }
+  }
+  if (!steps.length) {
+    steps.push(fk(km) + ' km santai di pace ' + easyRange(Z) + ' /km');
+    if (phase !== 'base') steps.push('Boleh bertahap sedikit lebih cepat (steady) di 10 menit terakhir.');
+  }
+  if (km >= 16) steps.push('Latih nutrisi lomba: 30–60 g karbohidrat per jam setelah menit ke-60, dan minum teratur.');
+  return mk('long', special && steps.length > 1 && steps[1].indexOf('pace ' + (goal === 'mar' ? 'maraton' : 'half')) >= 0 ? 'Long run + blok pace' : 'Long run', km, steps, 'E',
+    'Sesi kunci untuk daya tahan: otot, tendon, dan penggunaan lemak sebagai bahan bakar.');
+}
+function restSession(note) {
+  return { type: 'rest', title: 'Istirahat', km: 0, steps: [note || 'Libur lari. Jalan santai atau mobilitas 10–15 menit boleh.'], zone: null, why: 'Adaptasi terjadi saat pulih, bukan saat latihan.' };
+}
+function raceSession(goal, RP, gk) {
+  const pace = fmtPace(RP);
+  const steps = ['Target pace ' + pace + ' /km, finis sekitar ' + fmtTime(RP * gk) + '.'];
+  if (goal === '5k' || goal === '10k') {
+    steps.unshift('Pemanasan 15 menit jogging + 4 strides, selesai 10 menit sebelum start.');
+    steps.push('Kilometer pertama 3–5 detik lebih lambat dari target, kilometer tengah stabil, habiskan tenaga di akhir.');
+  } else if (goal === 'hm') {
+    steps.push('Km 1–3 sedikit di bawah pace, jaga stabil sampai km 16, tambah di 5 km terakhir bila masih kuat.');
+    steps.push('Minum setiap 5 km, gel di km 8 dan km 15 bila sudah dilatih.');
+  } else {
+    steps.push('Km 1–10 tahan di pace, jangan tergoda lebih cepat. Km 10–30 stabil. Km 30 ke atas dimulai lomba sebenarnya.');
+    steps.push('Karbohidrat 30–60 g per jam, minum rutin. Jangan memakai sepatu atau gel baru.');
+  }
+  return mk('race', 'LOMBA ' + GOAL_NAME[goal], gk, steps, 'RP', 'Ikuti rencana pacing. Hari lomba bukan hari bereksperimen.');
+}
+
+function q1For(goal, phase, k, km, Z, RP) {
+  if (phase === 'taper') return sharpenerSession(km, Z, RP);
+  if (phase === 'base') return fartlekSession(km, Z);
+  if (phase === 'build') {
+    if ((goal === '5k' || goal === '10k') && k % 2 === 1) return intervalSession(km, Z, true);
+    return tempoSession(km, Z, goal);
+  }
+  if (goal === '5k') return intervalSession(km, Z, false);
+  if (goal === '10k') return k % 2 === 0 ? intervalSession(km, Z, false) : rpSession(km, Z, RP, goal);
+  if (goal === 'hm') return k % 2 === 0 ? tempoSession(km, Z, goal) : rpSession(km, Z, RP, goal);
+  return tempoSession(km, Z, goal);
+}
+function q2For(goal, phase, k, km, Z, RP) {
+  if (phase === 'taper' || phase === 'base') return easySession(km, Z, true);
+  if (goal === '5k' || goal === '10k') return phase === 'build' ? fartlekSession(km, Z) : tempoSession(Math.min(km, 8.5), Z, goal);
+  return mediumLongSession(km, Z, RP, phase, goal);
+}
+
+const LAYOUT = {
+  3: ['R', 'Q1', 'R', 'E', 'R', 'R', 'L'],
+  4: ['R', 'Q1', 'R', 'E', 'R', 'E', 'L'],
+  5: ['R', 'Q1', 'E', 'Q2', 'R', 'E', 'L'],
+  6: ['E', 'Q1', 'E', 'Q2', 'R', 'E', 'L']
+};
+function dayKm(vol, dW, goal, level) {
+  const hasQ2 = dW >= 5, nE = dW - 2 - (hasQ2 ? 1 : 0);
+  const longCap = { '5k': 16, '10k': 20, 'hm': 26, 'mar': 32 }[goal] * (level === 'pemula' ? 0.85 : 1);
+  const share = dW === 3 ? 0.40 : dW === 4 ? 0.33 : dW === 5 ? 0.30 : 0.28;
+  const L = Math.max(5, Math.min(longCap, vol * share));
+  const qCap = { '5k': 9.5, '10k': 11.5, 'hm': 13.5, 'mar': 15.5 }[goal];
+  const Q1 = Math.max(6, Math.min(qCap, vol * (dW === 3 ? 0.28 : dW === 4 ? 0.22 : 0.20)));
+  const Q2 = hasQ2 ? Math.max(5, vol * 0.16) : 0;
+  const E = Math.max(3, Math.min(Math.max(3, L * 0.65), (vol - L - Q1 - Q2) / nE));
+  return { L: r05(L), Q1: r05(Q1), Q2: r05(Q2), E: r05(E) };
+}
+
+/* ---------- rencana ---------- */
+function buildPlan(p, vdot, today) {
+  const goal = p.goal, gk = DIST[goal];
+  const d = clamp(p.days || 4, 3, 6);
+  const level = p.level || 'menengah';
+  const Z = zonesFor(vdot);
+  const thisMon = mondayOf(today);
+  const defW = { '5k': 10, '10k': 12, 'hm': 14, 'mar': 18 }[goal];
+  let raceDate = p.raceDate ? parseYmd(p.raceDate) : addDays(thisMon, (defW - 1) * 7 + 6);
+  const raceMon = mondayOf(raceDate);
+  const rawN = dayDiff(thisMon, raceMon) / 7 + 1;
+  const n = clamp(rawN, 1, 24);
+  const startMon = addDays(raceMon, -(n - 1) * 7);
+  const W0 = Math.max(8, p.weeklyKm || 15);
+  const capTab = { '5k': { pemula: 35, menengah: 55, mahir: 75 }, '10k': { pemula: 40, menengah: 65, mahir: 85 }, 'hm': { pemula: 50, menengah: 75, mahir: 100 }, 'mar': { pemula: 55, menengah: 90, mahir: 120 } };
+  const peak = Math.max(Math.min(capTab[goal][level] || capTab[goal].menengah, d * 14), W0);
+
+  let RP, rpClamped = false;
+  if (p.targetSec > 0) {
+    RP = p.targetSec / gk;
+    const fastest = predictTime(vdot * 1.06, gk) / gk;
+    if (RP < fastest) { RP = fastest; rpClamped = true; }
+  } else {
+    RP = predictTime(vdot * (1 + Math.min(0.03, n * 0.0025)), gk) / gk;
+  }
+
+  let taper = goal === 'mar' ? (n >= 10 ? 3 : n >= 6 ? 2 : 1) : (n >= 8 ? 2 : 1);
+  taper = Math.min(taper, n);
+  const R = n - taper;
+  const vols = [], cuts = [];
+  let base = Math.min(W0, peak);
+  for (let i = 0; i < R; i++) {
+    if (i === 0) { vols.push(Math.round(base)); cuts.push(false); }
+    else if (i % 4 === 3 && i < R - 1) { vols.push(Math.round(base * 0.8)); cuts.push(true); }
+    else { base = Math.min(peak, Math.max(base + 1, base * 1.08)); vols.push(Math.round(base)); cuts.push(false); }
+  }
+  const peakVol = vols.length ? Math.max.apply(null, vols) : Math.round(W0);
+  const tf = taper === 3 ? [0.8, 0.65, 0.45] : taper === 2 ? [0.75, 0.5] : [0.5];
+  for (let t = 0; t < taper; t++) { vols.push(Math.round(peakVol * tf[t])); cuts.push(false); }
+
+  const nb = R >= 4 ? Math.ceil(R * 0.34) : 0, np = R >= 3 ? Math.ceil(R * 0.28) : 0;
+  const phaseOf = i => i >= R ? 'taper' : i < nb ? 'base' : i >= R - np ? 'peak' : 'build';
+  const rw = (raceDate.getDay() + 6) % 7;
+  const eKm = Math.max(4, r05(peakVol * 0.1));
+  const counters = { base: 0, build: 0, peak: 0, taper: 0 };
+  const weeks = [];
+
+  for (let i = 0; i < n; i++) {
+    const start = addDays(startMon, i * 7);
+    const phase = phaseOf(i), cut = cuts[i], vol = vols[i];
+    const k = counters[phase]++;
+    const isRaceWeek = i === n - 1;
+    const sessions = [];
+    if (isRaceWeek) {
+      for (let j = 0; j < 7; j++) {
+        if (j === rw) sessions.push(raceSession(goal, RP, gk));
+        else if (j > rw) sessions.push(restSession('Pemulihan setelah lomba. Jalan santai, makan cukup, tidur lebih awal.'));
+        else if (j === rw - 1) sessions.push(goal === '5k' || goal === '10k' ? easySession(3, Z, true) : restSession('Istirahat penuh. Siapkan perlengkapan, makan karbohidrat cukup.'));
+        else if (j === rw - 2) sessions.push(easySession(eKm, Z, true));
+        else if (j === rw - 3) sessions.push(sharpenerSession(Math.max(5.5, r05(peakVol * 0.12)), Z, RP));
+        else sessions.push(j % 2 === 0 ? easySession(eKm, Z, false) : restSession());
+      }
+    } else {
+      const dW = clamp(Math.round(vol / 7), 3, d);
+      const lay = LAYOUT[dW], dk = dayKm(vol, dW, goal, level);
+      for (let j = 0; j < 7; j++) {
+        const slot = lay[j];
+        if (slot === 'R') sessions.push(restSession());
+        else if (slot === 'E') {
+          if (dW === 6 && j === 0) sessions.push(easySession(Math.max(3, r05(dk.E * 0.8)), Z, false, true));
+          else sessions.push(easySession(dk.E, Z, (j === 3 || j === 5) && phase !== 'peak' && phase !== 'taper' ? true : false));
+        }
+        else if (slot === 'Q1') sessions.push(q1For(goal, phase, k, dk.Q1, Z, RP));
+        else if (slot === 'Q2') sessions.push(q2For(goal, phase, k, dk.Q2, Z, RP));
+        else sessions.push(longSession(dk.L, Z, RP, phase, goal, cut));
+      }
+    }
+    const days = sessions.map((s, j) => ({ date: ymd(addDays(start, j)), dow: j, session: s }));
+    weeks.push({
+      idx: i, start: ymd(start), phase, cut, raceWeek: isRaceWeek, days,
+      km: Math.round(sessions.reduce((a, s) => a + s.km, 0) * 10) / 10
+    });
+  }
+
+  const notes = [];
+  if (n < 6) notes.push('Waktu persiapan singkat (' + n + ' minggu). Fokus pada konsistensi dan pulih cukup, jangan menambah beban mendadak.');
+  if (rawN > 24) notes.push('Lomba masih lebih dari 24 minggu lagi. Rencana mulai ' + ymd(startMon) + '. Sampai saat itu jaga lari santai sekitar ' + Math.round(W0) + ' km per minggu.');
+  if (rpClamped) notes.push('Target waktu lebih cepat dari yang realistis dari kemampuan sekarang. Pace lomba dalam latihan dibatasi ke batas atas yang masuk akal.');
+  if (goal === 'mar' && W0 < 25 && n < 16) notes.push('Basis lari mingguan masih rendah untuk maraton dengan waktu persiapan ini. Pertimbangkan half marathon dulu atau tanggal lomba yang lebih jauh.');
+  if (goal === 'hm' && W0 < 15 && n < 10) notes.push('Basis lari mingguan masih rendah untuk half marathon dengan waktu persiapan ini. Tambah volume pelan-pelan.');
+
+  return { weeks, n, taper, goal, gk, vdot, Z, RP, peakVol, start: ymd(startMon), raceDate: ymd(raceDate), notes };
+}
+
+function sessionOn(plan, date) {
+  const key = ymd(date);
+  for (const w of plan.weeks) for (const d of w.days) if (d.date === key) return { week: w, day: d };
+  return null;
+}
+
+/* ---------- pemantauan ---------- */
+function weeklyActual(logs, startMon, count) {
+  const out = [];
+  for (let i = 0; i < count; i++) {
+    const s = addDays(startMon, i * 7), e = addDays(s, 6);
+    const a = ymd(s), b = ymd(e);
+    const ls = logs.filter(l => l.date >= a && l.date <= b);
+    out.push({ start: a, km: Math.round(ls.reduce((x, l) => x + l.km, 0) * 10) / 10, runs: ls.length });
+  }
+  return out;
+}
+function zoneCheck(entry, Z) {
+  const pace = entry.sec / entry.km;
+  if (entry.type === 'easy' || entry.type === 'long') {
+    if (pace < Z.E.lo - 8) return { status: 'fast', text: 'Lebih cepat dari zona Easy (' + easyRange(Z) + '). Perlambat agar pulih.' };
+    if (pace <= Z.E.hi + 10) return { status: 'ok', text: 'Sesuai zona Easy.' };
+    return { status: 'ok', text: 'Lebih pelan dari zona Easy. Tidak masalah.' };
+  }
+  if (entry.type === 'tempo') {
+    if (pace < Z.T.p - 10) return { status: 'fast', text: 'Lebih cepat dari pace T ' + fmtPace(Z.T.p) + '.' };
+    if (pace <= Z.T.p + 15) return { status: 'ok', text: 'Sesuai pace T.' };
+    return { status: 'slow', text: 'Lebih lambat dari pace T ' + fmtPace(Z.T.p) + '. Wajar bila rata-rata termasuk pemanasan.' };
+  }
+  if (entry.type === 'race' && entry.km >= 1.5) return { status: 'ok', text: 'Setara VDOT ' + vdotFromRace(entry.km, entry.sec).toFixed(1) + '.' };
+  return null;
+}
+function analyzeLoad(logs, today, Z) {
+  const out = [];
+  if (!logs.length) return out;
+  const sorted = logs.slice().sort((a, b) => a.date < b.date ? 1 : a.date > b.date ? -1 : 0);
+  const sumKm = (a, b) => logs.filter(l => { const dd = dayDiff(parseYmd(l.date), today); return dd >= a && dd <= b; }).reduce((s, l) => s + l.km, 0);
+  const acute = sumKm(0, 6), chronic = sumKm(0, 27) / 4;
+  const span = dayDiff(parseYmd(sorted[sorted.length - 1].date), today);
+  if (span >= 21 && chronic > 0) {
+    const r = acute / chronic;
+    if (r > 1.5) out.push({ level: 'bad', ease: true, title: 'Lonjakan beban', text: '7 hari terakhir ' + fk(acute) + ' km, ' + r.toFixed(1).replace('.', ',') + '× rata-rata 4 minggu (' + fk(chronic) + ' km). Risiko cedera naik. Kurangi volume minggu ini.' });
+    else if (r > 1.3) out.push({ level: 'warn', title: 'Beban naik cepat', text: '7 hari terakhir ' + fk(acute) + ' km, ' + r.toFixed(1).replace('.', ',') + '× rata-rata 4 minggu. Jangan menambah lagi sampai terasa stabil.' });
+    else if (r < 0.6 && chronic >= 10) out.push({ level: 'info', title: 'Volume turun', text: '7 hari terakhir ' + fk(acute) + ' km, jauh di bawah rata-rata ' + fk(chronic) + ' km. Bila sengaja pulih, abaikan. Bila tidak, kembali bertahap.' });
+  }
+  const recent = sorted.filter(l => dayDiff(parseYmd(l.date), today) <= 7);
+  if (recent.length >= 3 && recent.slice(0, 3).every(l => l.rpe >= 8)) out.push({ level: 'warn', ease: true, title: 'Tiga lari berat berturut-turut', text: 'RPE 8 ke atas pada tiga lari terakhir. Selipkan lari santai atau istirahat sebelum sesi kualitas berikutnya.' });
+  const pain = sorted.map(l => l.pain || 0);
+  if (pain[0] >= 3 || (pain.length > 1 && pain[0] >= 2 && pain[1] >= 2)) out.push({ level: 'bad', ease: true, title: 'Nyeri berulang', text: 'Anda mencatat nyeri sedang sampai berat. Hentikan sesi keras. Bila berlanjut lebih dari beberapa hari, temui fisioterapis atau dokter olahraga.' });
+  else if (pain[0] === 1) out.push({ level: 'info', title: 'Nyeri ringan tercatat', text: 'Pantau di lari berikutnya. Bila bertambah, turunkan intensitas.' });
+  const fastEasy = recent.filter(l => (l.type === 'easy' || l.type === 'long') && l.sec / l.km < Z.E.lo - 10);
+  if (fastEasy.length >= 2) out.push({ level: 'warn', title: 'Lari santai terlalu cepat', text: fastEasy.length + ' lari santai minggu ini lebih cepat dari zona Easy. Lari santai yang terlalu cepat menguras tenaga untuk sesi kualitas.' });
+  const last = sorted[0], gap = dayDiff(parseYmd(last.date), today);
+  if (gap >= 7) out.push({ level: 'info', title: 'Belum lari ' + gap + ' hari', text: 'Mulai lagi dengan lari santai pendek. Tidak perlu mengejar sesi yang terlewat.' });
+  if (!out.length) out.push({ level: 'good', title: 'Beban terkendali', text: 'Tidak ada tanda beban berlebih dari catatan Anda.' });
+  return out;
+}
+function personalBests(logs, profile) {
+  const pb = {};
+  const take = (key, sec, date, src) => { if (key && sec > 0 && (!pb[key] || sec < pb[key].sec)) pb[key] = { sec, date, src }; };
+  const refSec = parseTime(profile.refTime);
+  if (isFinite(refSec) && DIST[profile.refKey]) take(profile.refKey, refSec, profile.refDate, 'hasil acuan');
+  (logs || []).forEach(l => { if (l.type === 'race') take(stdKey(l.km), l.sec, l.date, 'catatan'); });
+  return pb;
+}
+/* ===== APLIKASI ===== */
+const LS_KEY = 'garis-finis-v1';
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+const DOW = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+const DOW3 = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
+const TYPE_LABEL = { easy: 'Santai', recovery: 'Pemulihan', long: 'Long run', tempo: 'Tempo', interval: 'Interval', fartlek: 'Fartlek', racepace: 'Pace lomba', medium: 'Menengah', race: 'Lomba', rest: 'Istirahat' };
+const LOG_TYPES = [['easy', 'Lari santai'], ['long', 'Long run'], ['tempo', 'Tempo'], ['interval', 'Interval / fartlek'], ['race', 'Lomba / tes waktu'], ['other', 'Lainnya']];
+const PAIN = [['0', 'Tidak ada'], ['1', 'Ringan'], ['2', 'Sedang'], ['3', 'Berat']];
+const TABS = [['today', 'Hari ini'], ['plan', 'Rencana'], ['log', 'Catatan lari'], ['zones', 'Zona & prediksi'], ['predict', 'Prediktor'], ['profile', 'Profil']];
+const HARD = ['tempo', 'interval', 'fartlek', 'racepace', 'long', 'medium'];
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const fmtDate = d => d.getDate() + ' ' + MONTHS[d.getMonth()];
+const fmtDateLong = d => DOW[(d.getDay() + 6) % 7] + ', ' + fmtDate(d);
+const num = (s) => parseFloat(String(s).replace(',', '.'));
+
+/* ---------- penyimpanan (per peramban; ada cadangan JSON) ---------- */
+const store = {
+  load() { try { const r = localStorage.getItem(LS_KEY); return r ? JSON.parse(r) : null; } catch (e) { return null; } },
+  save(s) { try { localStorage.setItem(LS_KEY, JSON.stringify(s)); } catch (e) { /* abaikan */ } },
+  clear() { try { localStorage.removeItem(LS_KEY); } catch (e) { /* abaikan */ } }
+};
+function demoProfile(today) {
+  return {
+    demo: true, goal: '10k', raceDate: ymd(addDays(mondayOf(today), 12 * 7 + 6)),
+    refKey: '10k', refTime: '52:30', refDate: ymd(addDays(today, -21)), targetTime: '50:30',
+    days: 5, weeklyKm: 30, level: 'menengah', age: 34, hrMax: ''
+  };
+}
+function loadState() {
+  const raw = store.load();
+  if (raw && raw.profile && DIST[raw.profile.goal]) return { profile: raw.profile, logs: Array.isArray(raw.logs) ? raw.logs : [], tab: raw.tab || 'today' };
+  return { profile: demoProfile(new Date()), logs: [], tab: 'today' };
+}
+let S = loadState();
+const UI = { draft: null, confirmDel: null, confirmReset: false, backupText: '', toastT: 0 };
+function persist() { store.save({ profile: S.profile, logs: S.logs, tab: S.tab }); }
+
+/* ---------- turunan ---------- */
+function derive() {
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const p = S.profile;
+  const ev = effectiveVdot(p, S.logs, today);
+  const targetSec = parseTime(p.targetTime);
+  const plan = buildPlan({ goal: p.goal, days: +p.days, level: p.level, weeklyKm: +p.weeklyKm, raceDate: p.raceDate, targetSec: isFinite(targetSec) ? targetSec : null }, ev.vdot, today);
+  return {
+    today, todayStr: ymd(today), ev, plan, Z: plan.Z, targetSec,
+    hrMax: hrMaxOf(+p.age || null, +p.hrMax || null),
+    alerts: analyzeLoad(S.logs, today, plan.Z),
+    pb: personalBests(S.logs, p),
+    ga: goalAnalysis(ev.vdot, p.goal, targetSec)
+  };
+}
+
+/* ---------- potongan tampilan ---------- */
+function pill(s) { return '<span class="pill z-' + (s.zone || 'rest') + '">' + esc(TYPE_LABEL[s.type] || s.type) + '</span>'; }
+function zoneChips(zone, D) {
+  const Z = D.Z, chips = [];
+  const chip = (l, v, u) => '<div class="chip"><span>' + l + '</span><b>' + v + '</b><i>' + u + '</i></div>';
+  if (zone === 'E') { chips.push(chip('Pace E', easyRange(Z), '/km')); const h = hrRange('E', D.hrMax); if (h) chips.push(chip('Detak jantung', h[0] + '–' + h[1], 'bpm')); }
+  else if (zone === 'T') { chips.push(chip('Pace T', fmtPace(Z.T.p), '/km')); const h = hrRange('T', D.hrMax); if (h) chips.push(chip('Detak jantung', h[0] + '–' + h[1], 'bpm')); }
+  else if (zone === 'I') { chips.push(chip('Pace I', fmtPace(Z.I.p), '/km')); const h = hrRange('I', D.hrMax); if (h) chips.push(chip('Detak jantung', h[0] + '–' + h[1], 'bpm')); }
+  else if (zone === 'RP') { chips.push(chip('Pace lomba', fmtPace(D.plan.RP), '/km')); }
+  return chips.length ? '<div class="chips">' + chips.join('') + '</div>' : '';
+}
+function alertList(alerts) {
+  const TAG = { bad: 'Perlu perhatian', warn: 'Waspada', info: 'Info', good: 'Baik' };
+  return '<div class="alerts">' + alerts.map(a => '<div class="alert ' + a.level + '"><span class="tag">' + TAG[a.level] + '</span><b>' + esc(a.title) + '</b><p>' + esc(a.text) + '</p></div>').join('') + '</div>';
+}
+function niceMax(v) { return Math.max(10, Math.ceil(v / 10) * 10); }
+function volChart(items, max, curIdx, legend) {
+  const n = items.length;
+  const bars = items.map((it, i) => {
+    const cls = ['vcol'];
+    if (i === curIdx) cls.push('cur');
+    if (it.race) cls.push('race');
+    if (it.cut) cls.push('cutw');
+    if (it.plan == null) cls.push('only-a');
+    const p = it.plan != null ? '<b class="p" style="height:' + (it.plan / max * 100).toFixed(1) + '%"></b>' : '';
+    const a = it.actual > 0 ? '<b class="a" style="height:' + (it.actual / max * 100).toFixed(1) + '%"></b>' : '';
+    return '<div class="' + cls.join(' ') + '" title="' + esc(it.title) + '">' + p + a + '</div>';
+  }).join('');
+  const xl = items.map((it, i) => '<span>' + ((i === 0 || i === n - 1 || (i + 1) % 4 === 0 || n <= 10) ? esc(it.label) : '') + '</span>').join('');
+  return '<div class="vol" style="--n:' + n + '" role="img" aria-label="' + esc(legend.aria) + '"><div class="vol-y"><span>' + max + '</span><span>' + max / 2 + '</span><span>0</span></div>' +
+    '<div class="vol-plot"><div class="vol-grid"><i></i><i></i><i></i></div><div class="vol-bars">' + bars + '</div></div><div class="vol-x">' + xl + '</div></div>' +
+    '<div class="legend">' + legend.items.map(x => '<span style="--c:' + x[1] + '">' + esc(x[0]) + '</span>').join('') + '</div>';
+}
+
+/* ---------- tab: Hari ini ---------- */
+function viewToday(D) {
+  const { plan, today, todayStr } = D, p = S.profile;
+  const raceDate = parseYmd(plan.raceDate);
+  const toRace = dayDiff(today, raceDate);
+  const hit = sessionOn(plan, today);
+  let h = '';
+  if (p.demo) h += '<div class="notice" style="margin-bottom:18px"><p><b>Data contoh.</b> Rencana ini dibuat dari profil contoh (10K, hasil acuan 52:30). Isi profil Anda untuk rencana yang sebenarnya.</p><button class="btn primary" type="button" data-tab="profile">Isi profil saya</button></div>';
+
+  const weekNo = hit ? (hit.week.idx + 1) + ' / ' + plan.n : toRace < 0 ? 'Selesai' : 'Belum mulai';
+  const weekSub = hit ? PHASE_NAME[hit.week.phase] : toRace < 0 ? '' : 'mulai ' + fmtDate(parseYmd(plan.start));
+  h += '<div class="strip">' +
+    '<div><div class="lbl">Lomba</div><div class="v">' + esc(GOAL_NAME[plan.goal]) + ' <small>' + fmtDate(raceDate) + (toRace >= 0 ? ' · H-' + toRace : '') + '</small></div></div>' +
+    '<div><div class="lbl">Minggu</div><div class="v">' + weekNo + ' <small>' + esc(weekSub) + '</small></div></div>' +
+    '<div><div class="lbl">VDOT</div><div class="v">' + D.ev.vdot.toFixed(1).replace('.', ',') + ' <small>' + esc(D.ev.label) + '</small></div></div>' +
+    '<div><div class="lbl">Prediksi ' + esc(GOAL_NAME[plan.goal]) + '</div><div class="v">' + fmtTime(D.ga.pred) + (D.targetSec > 0 ? ' <small>target ' + fmtTime(D.targetSec) + '</small>' : '') + '</div></div></div>';
+
+  if (toRace < 0) {
+    h += '<section class="card stack"><h2>Lomba sudah lewat</h2><p>Pulihkan 1–2 minggu dengan lari santai saja. Setelah itu catat hasil lomba di Catatan lari dan perbarui tanggal lomba berikutnya di Profil.</p><div class="actions"><button class="btn primary" type="button" data-tab="log">Catat hasil lomba</button><button class="btn" type="button" data-tab="profile">Ubah profil</button></div></section>';
+    return h;
+  }
+  if (!hit) {
+    h += '<section class="card stack"><h2>Rencana mulai ' + fmtDate(parseYmd(plan.start)) + '</h2><p>Sampai saat itu jaga lari santai sekitar ' + esc(p.weeklyKm) + ' km per minggu di pace ' + easyRange(D.Z) + ' /km, tambah kekuatan 2 kali seminggu, dan catat lari Anda.</p></section>';
+  } else {
+    const s = hit.day.session;
+    const todays = S.logs.filter(l => l.date === todayStr);
+    const ease = D.alerts.some(a => a.ease) && HARD.indexOf(s.type) >= 0;
+    h += '<section class="bib"><i class="pin a"></i><i class="pin b"></i><i class="pin c"></i><i class="pin d"></i>' +
+      '<div class="bib-head"><span>Hari ini</span><span>' + fmtDateLong(today) + '</span></div>' +
+      '<div class="bib-body"><div class="bib-num"><span class="n">' + (s.km ? fk(s.km) : '–') + '</span><span class="u">KM</span></div>' +
+      '<div class="bib-info"><div>' + pill(s) + '</div><h2>' + esc(s.title) + '</h2>' + zoneChips(s.zone, D) + '</div></div>' +
+      '<div class="bib-foot">' + (s.type === 'rest' ? '' : '<ul class="steps">' + s.steps.map(x => '<li><span>' + esc(x) + '</span></li>').join('') + '</ul>') +
+      '<p class="why">' + esc(s.why) + '</p>' +
+      (todays.length ? '<div class="logged"><b>Sudah dicatat:</b><span class="mono">' + todays.map(l => fk(l.km) + ' km · ' + fmtPace(l.sec / l.km) + ' /km').join(' + ') + '</span></div>' : '') +
+      (s.type === 'rest' ? '' : '<div class="actions"><button class="btn primary" type="button" data-act="log-planned">' + (todays.length ? 'Catat lagi' : 'Catat lari ini') + '</button></div>') +
+      '</div></section>';
+    if (ease) {
+      const alt = Math.max(3, Math.round(s.km * 0.5));
+      h += '<div class="alert warn" style="margin-top:18px"><span class="tag">Saran penyesuaian</span><b>Ringankan sesi hari ini</b><p>Catatan Anda menunjukkan beban tinggi atau nyeri. Ganti dengan lari santai ' + alt + ' km di pace ' + easyRange(D.Z) + ' /km, atau istirahat. Sesi kualitas bisa digeser 1–2 hari setelah tubuh terasa normal.</p></div>';
+    }
+    const a0 = ymd(parseYmd(hit.week.start)), a1 = ymd(addDays(parseYmd(hit.week.start), 6));
+    const done = S.logs.filter(l => l.date >= a0 && l.date <= a1).reduce((x, l) => x + l.km, 0);
+    const pct = hit.week.km > 0 ? Math.min(100, done / hit.week.km * 100) : 0;
+    h += '<section class="card" style="margin-top:18px"><h2>Minggu ini</h2><p class="small muted" style="margin-bottom:10px"><span class="mono">' + fk(done) + '</span> dari <span class="mono">' + fk(hit.week.km) + '</span> km direncanakan' + (hit.week.cut ? ' · minggu pemulihan' : '') + '</p><div class="prog" role="img" aria-label="Progres jarak minggu ini ' + Math.round(pct) + ' persen"><i style="width:' + pct.toFixed(0) + '%"></i></div></section>';
+
+    const next = [];
+    for (let i = 0; i < 7; i++) { const x = sessionOn(plan, addDays(today, i)); if (x) next.push(x); }
+    h += '<section class="card" style="margin-top:18px"><h2>7 hari ke depan</h2><div class="week7">' + next.map(x => {
+      const ss = x.day.session, dt = parseYmd(x.day.date);
+      return '<div class="day7' + (x.day.date === todayStr ? ' today' : '') + '"><span class="d">' + DOW3[x.day.dow] + ' ' + dt.getDate() + '</span>' + pill(ss) + '<span class="km">' + (ss.km ? fk(ss.km) + ' <small>KM</small>' : '–') + '</span></div>';
+    }).join('') + '</div></section>';
+  }
+  if (S.logs.length) h += '<section class="card" style="margin-top:18px"><h2>Pemantauan beban</h2>' + alertList(D.alerts) + '</section>';
+  return h;
+}
+
+/* ---------- tab: Rencana ---------- */
+function viewPlan(D) {
+  const { plan, todayStr } = D;
+  const act = weeklyActual(S.logs, parseYmd(plan.start), plan.n);
+  const curIdx = plan.weeks.findIndex(w => todayStr >= w.start && todayStr <= ymd(addDays(parseYmd(w.start), 6)));
+  const items = plan.weeks.map((w, i) => {
+    const a = w.start <= todayStr ? act[i].km : null;
+    return { label: String(i + 1), plan: w.km, actual: a, race: w.raceWeek, cut: w.cut, title: 'Minggu ' + (i + 1) + ' (' + fmtDate(parseYmd(w.start)) + '): rencana ' + fk(w.km) + ' km' + (a != null ? ', tercatat ' + fk(a) + ' km' : '') };
+  });
+  const max = niceMax(Math.max.apply(null, items.map(x => Math.max(x.plan || 0, x.actual || 0))));
+  const counts = {};
+  plan.weeks.forEach(w => { counts[w.phase] = (counts[w.phase] || 0) + 1; });
+  const ribbon = ['base', 'build', 'peak', 'taper'].filter(k => counts[k]).map(k => '<div class="ph-' + k + '" style="flex:' + counts[k] + '" title="' + PHASE_NAME[k] + ' ' + counts[k] + ' minggu">' + PHASE_NAME[k] + '</div>').join('');
+  const raceDate = parseYmd(plan.raceDate);
+  let h = '<div class="stack"><section class="card"><h2>Rencana ' + esc(GOAL_NAME[plan.goal]) + '</h2>' +
+    '<p class="small muted">' + plan.n + ' minggu sampai ' + fmtDate(raceDate) + ' · puncak ' + plan.peakVol + ' km per minggu · target pace lomba <span class="mono">' + fmtPace(plan.RP) + '</span> /km (' + fmtTime(plan.RP * plan.gk) + ')</p>' +
+    '<div class="ribbon">' + ribbon + '</div>' +
+    volChart(items, max, curIdx, { aria: 'Grafik jarak mingguan per minggu rencana, dalam kilometer', items: [['Rencana (km)', 'color-mix(in srgb, var(--accent) 22%, var(--surface))'], ['Tercatat', 'var(--accent)'], ['Minggu pemulihan (garis putus)', 'color-mix(in srgb, var(--accent) 10%, var(--surface))'], ['Minggu lomba', 'var(--ink)']] }) + '</section>';
+  if (plan.notes.length) h += alertList(plan.notes.map(t => ({ level: 'warn', title: 'Catatan rencana', text: t })));
+  h += '<section><h2 style="margin-bottom:12px">Minggu demi minggu</h2>' + plan.weeks.map((w, i) => {
+    const s = parseYmd(w.start), e = addDays(s, 6);
+    return '<details class="wk"' + (i === curIdx || (curIdx < 0 && i === 0) ? ' open' : '') + '><summary><span class="wk-t">Minggu ' + (i + 1) + ' · ' + fmtDate(s) + '–' + fmtDate(e) + '</span><span class="pill z-' + ({ base: 'M', build: 'T', peak: 'I', taper: 'E' }[w.phase]) + '">' + PHASE_NAME[w.phase] + '</span>' +
+      (w.cut ? '<span class="badge">Pemulihan</span>' : '') + (w.raceWeek ? '<span class="badge">Minggu lomba</span>' : '') + (i === curIdx ? '<span class="badge now">Sekarang</span>' : '') +
+      '<span class="wk-km">' + fk(w.km) + ' km</span></summary><div class="wk-days">' + w.days.map(d => {
+        const ss = d.session, dt = parseYmd(d.date);
+        return '<div class="day' + (ss.type === 'rest' ? ' rest' : '') + (d.date === todayStr ? ' today' : '') + '"><div class="dn">' + DOW3[d.dow] + '<b>' + dt.getDate() + '</b></div><div class="db"><div class="hd">' + pill(ss) + '<b>' + esc(ss.title) + '</b>' + (ss.km ? '<span class="mono">' + fk(ss.km) + ' km</span>' : '') + '</div>' + (ss.type === 'rest' ? '' : '<ul>' + ss.steps.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul>') + '</div></div>';
+      }).join('') + '</div></details>';
+  }).join('') + '</section>';
+  h += '<section class="card"><h2>Pendamping tiap minggu</h2><ul class="small muted" style="margin:0;padding-left:18px;display:grid;gap:6px"><li>Kekuatan 2 kali seminggu, 20 menit: squat satu kaki, calf raise, jembatan pinggul, plank. Lakukan di hari lari santai.</li><li>Sekitar 80% volume harus santai. Hari santai yang terlalu cepat mengurangi kualitas hari keras.</li><li>Naikkan volume maksimal sekitar 10% per minggu. Minggu pemulihan sengaja lebih ringan.</li><li>Tidur 7–9 jam. Dalam 30 menit setelah sesi keras, makan karbohidrat dan protein.</li></ul></section></div>';
+  return h;
+}
+
+/* ---------- tab: Catatan lari ---------- */
+function opts(list, sel) { return list.map(o => '<option value="' + esc(o[0]) + '"' + (String(o[0]) === String(sel) ? ' selected' : '') + '>' + esc(o[1]) + '</option>').join(''); }
+function viewLog(D) {
+  const dr = UI.draft || {};
+  const startMon = addDays(mondayOf(D.today), -7 * 7);
+  const wa = weeklyActual(S.logs, startMon, 8);
+  const items = wa.map((w, i) => ({ label: fmtDate(parseYmd(w.start)).replace(' ', '/'), plan: null, actual: w.km, title: 'Minggu ' + fmtDate(parseYmd(w.start)) + ': ' + fk(w.km) + ' km, ' + w.runs + ' lari' }));
+  const max = niceMax(Math.max.apply(null, items.map(x => x.actual)));
+  let h = '<div class="grid2"><div class="stack"><form id="logForm" class="card form" novalidate><h2 class="full">Catat lari</h2>' +
+    '<label>Tanggal<input id="l-date" type="date" max="' + D.todayStr + '" value="' + esc(dr.date || D.todayStr) + '"></label>' +
+    '<label>Jarak (km)<input id="l-km" inputmode="decimal" placeholder="8,5" value="' + (dr.km ? esc(String(dr.km).replace('.', ',')) : '') + '"></label>' +
+    '<label>Waktu<input id="l-time" placeholder="45:30 atau 1:05:00" autocomplete="off"></label>' +
+    '<label>Jenis<select id="l-type">' + opts(LOG_TYPES, dr.type || 'easy') + '</select></label>' +
+    '<label>Usaha (RPE 1–10)<span class="rpe-row"><input id="l-rpe" type="range" min="1" max="10" value="5"><output id="l-rpe-o">5</output></span><small>1 sangat ringan, 10 maksimal</small></label>' +
+    '<label>Nyeri<select id="l-pain">' + opts(PAIN, '0') + '</select></label>' +
+    '<label>Detak jantung rata-rata <small>(opsional)</small><input id="l-hr" inputmode="numeric" placeholder="150"></label>' +
+    '<label>Catatan <small>(opsional)</small><input id="l-note" maxlength="140" placeholder="Cuaca panas, kaki berat"></label>' +
+    '<p class="full small muted">Pace: <b class="mono" id="l-pace">–</b></p><p class="full err" id="l-err" role="alert"></p>' +
+    '<div class="full actions"><button class="btn primary" type="submit">Simpan lari</button></div></form>' +
+    '<section class="card"><h2>Pemantauan beban</h2>' + (S.logs.length ? alertList(D.alerts) : '<p class="small muted">Belum ada catatan. Setelah beberapa lari tercatat, di sini muncul peringatan beban, nyeri, dan lari santai yang terlalu cepat.</p>') + '</section></div>' +
+    '<div class="stack"><section class="card"><h2>Jarak 8 minggu terakhir</h2><p class="small muted">Kilometer tercatat per minggu (mulai Senin).</p>' +
+    volChart(items, max, 7, { aria: 'Grafik jarak tercatat per minggu selama 8 minggu terakhir, dalam kilometer', items: [['Tercatat (km)', 'var(--accent)'], ['Minggu ini (garis bawah)', 'var(--ink)']] }) + '</section>' +
+    '<section class="card"><h2>Riwayat</h2>';
+  const sorted = S.logs.slice().sort((a, b) => a.date < b.date ? 1 : a.date > b.date ? -1 : (b.id > a.id ? 1 : -1));
+  if (!sorted.length) h += '<p class="small muted">Belum ada lari tercatat. Catat lari pertama Anda di formulir.</p>';
+  h += sorted.slice(0, 60).map(l => {
+    const zc = zoneCheck(l, D.Z);
+    const type = (LOG_TYPES.filter(t => t[0] === l.type)[0] || [0, 'Lari'])[1];
+    return '<div class="log"><div class="l1"><span class="km">' + fk(l.km) + ' <small class="muted">KM</small></span><span class="mono">' + fmtTime(l.sec) + '</span><span class="mono muted">' + fmtPace(l.sec / l.km) + ' /km</span></div>' +
+      '<div class="del">' + (UI.confirmDel === l.id ? '<span class="actions"><button class="btn sm danger" type="button" data-act="del-yes" data-id="' + esc(l.id) + '">Hapus</button><button class="btn sm" type="button" data-act="del-no">Batal</button></span>' : '<button class="btn sm" type="button" data-act="del-ask" data-id="' + esc(l.id) + '">Hapus</button>') + '</div>' +
+      '<div class="meta"><span>' + fmtDate(parseYmd(l.date)) + ' · ' + esc(type) + '</span><span>RPE ' + l.rpe + '</span>' + (l.pain ? '<span>Nyeri ' + esc(PAIN[l.pain][1].toLowerCase()) + '</span>' : '') + (l.hr ? '<span>' + l.hr + ' bpm</span>' : '') + (l.note ? '<span>' + esc(l.note) + '</span>' : '') +
+      (zc ? '<span class="' + (zc.status === 'fast' ? 'fast-t' : 'ok-t') + '">' + esc(zc.text) + '</span>' : '') + '</div></div>';
+  }).join('');
+  return h + '</section></div></div>';
+}
+
+/* ---------- tab: Zona & prediksi ---------- */
+function viewZones(D) {
+  const { Z, ev, ga, pb } = D, p = S.profile;
+  const ZD = [
+    ['E', 'Easy', easyRange(Z), '3–4', 'Fondasi aerobik. Sekitar 80% latihan. Bisa bicara satu kalimat penuh.'],
+    ['M', 'Maraton', fmtPace(Z.M.p), '5–6', 'Pace maraton. Dipakai di blok pace dalam long run.'],
+    ['T', 'Tempo', fmtPace(Z.T.p), '7', 'Ambang laktat. Terasa nyaman-keras. Total 20–40 menit per sesi.'],
+    ['I', 'Interval', fmtPace(Z.I.p), '8–9', 'VO₂max. Repetisi 3–5 menit dengan pemulihan jog.'],
+    ['R', 'Repetisi', fmtPace(Z.R.p), '9–10', 'Kecepatan dan ekonomi lari. Strides dan repetisi 200–400 m, pemulihan penuh.']
+  ];
+  let h = '<div class="grid2"><div class="stack"><section class="card"><h2>Kebugaran saat ini</h2><div class="bigv">' + ev.vdot.toFixed(1).replace('.', ',') + '</div><p class="small muted" style="margin-top:8px">VDOT dihitung dari ' + esc(ev.label) + ' pada ' + fmtDate(parseYmd(ev.date)) + '. Hasil lomba atau tes waktu yang lebih baik dalam 90 hari terakhir memperbarui angka ini otomatis.</p></section>' +
+    '<section class="card"><h2>Zona latihan</h2>' + ZD.map(z => {
+      const hr = hrRange(z[0], D.hrMax);
+      return '<div class="zrow z-' + z[0] + '"><span class="zbadge">' + z[0] + '</span><div><div class="zh"><b>' + z[1] + '</b><span class="zp">' + z[2] + ' <small class="muted">/km</small></span><span class="small muted mono">400 m ' + (z[0] === 'E' ? fmtTime(Z.E.lo * 0.4) + '–' + fmtTime(Z.E.hi * 0.4) : fmtTime(({ M: Z.M.p, T: Z.T.p, I: Z.I.p, R: Z.R.p })[z[0]] * 0.4)) + '</span></div><p class="small muted">' + z[4] + ' RPE ' + z[3] + (hr ? ' · ' + hr[0] + '–' + hr[1] + ' bpm' : '') + '</p></div></div>';
+    }).join('') + (D.hrMax ? '<p class="small muted" style="margin-top:10px">Detak jantung memakai HRmax ' + D.hrMax + ' bpm. Pace adalah panduan utama, detak jantung bergeser karena panas, kafein, dan kelelahan.</p>' : '<p class="small muted" style="margin-top:10px">Isi usia atau HRmax di Profil untuk melihat zona detak jantung.</p>') + '</section></div>' +
+    '<div class="stack"><section class="card"><h2>Prediksi lomba</h2><div class="tw"><table><thead><tr><th>Jarak</th><th class="num">Prediksi</th><th class="num">Pace</th><th class="num">PB</th></tr></thead><tbody>' +
+    Object.keys(DIST).map(k => {
+      const t = predictTime(ev.vdot, DIST[k]), b = pb[k];
+      return '<tr' + (k === p.goal ? ' style="font-weight:700"' : '') + '><td>' + GOAL_NAME[k] + '</td><td class="num">' + fmtTime(t) + '</td><td class="num">' + fmtPace(t / DIST[k]) + '</td><td class="num">' + (b ? fmtTime(b.sec) : '–') + '</td></tr>';
+    }).join('') + '</tbody></table></div><p class="small muted" style="margin-top:10px">Prediksi mengandaikan latihan spesifik untuk jarak itu. Prediksi maraton dari lari 5K–10K cenderung terlalu optimis bila volume mingguan rendah.</p></section>';
+  if (ga.hasTarget) {
+    h += '<section class="card"><h2>Target ' + esc(GOAL_NAME[p.goal]) + ' ' + fmtTime(D.targetSec) + '</h2><p><span class="mono">' + (ga.gap * 100).toFixed(1).replace('.', ',') + '%</span> lebih cepat dari prediksi sekarang (' + fmtTime(ga.pred) + ').</p><div class="alert ' + ga.level + '" style="margin-top:12px"><span class="tag">' + ({ good: 'Baik', info: 'Info', warn: 'Waspada', bad: 'Perlu perhatian' })[ga.level] + '</span><p>' + esc(ga.verdict) + '</p></div>' +
+      (ga.interimSec ? '<p class="small muted" style="margin-top:10px">Target antara yang lebih aman untuk siklus ini: <b class="mono">' + fmtTime(ga.interimSec) + '</b>.</p>' : '') + '</section>';
+  } else {
+    h += '<section class="card"><h2>Target waktu</h2><p class="small muted">Belum ada target waktu. Isi di Profil agar pace lomba dalam latihan mengikuti target Anda.</p></section>';
+  }
+  return h + '</div></div>';
+}
+
+/* ---------- tab: Prediktor ---------- */
+function predictOut(key, sec, vNow) {
+  const km = DIST[key], v = vdotFromRace(km, sec), pred = predictTime(vNow, km), d = sec - pred, gap = (pred - sec) / pred;
+  const rel = Math.abs(d) < 5 ? 'Sama dengan prediksi Anda.' : fmtTime(Math.abs(d)) + (d < 0 ? ' lebih cepat' : ' lebih lambat') + ' dari prediksi Anda (' + fmtTime(pred) + ').';
+  const note = gap > 0.07 ? ' Jauh di atas kemampuan sekarang. Bagi menjadi target antara.' : gap > 0.04 ? ' Agresif untuk satu siklus latihan.' : gap > 0.01 ? ' Menantang tapi mungkin.' : '';
+  return '<div class="pout"><span class="lbl">Waktu finis</span><span class="big">' + fmtTime(sec) + '</span><span class="mono">Pace ' + fmtPace(sec / km) + ' /km</span><span class="small muted">Setara VDOT ' + v.toFixed(1).replace('.', ',') + ' (Anda ' + vNow.toFixed(1).replace('.', ',') + '). ' + esc(rel + note) + '</span></div>';
+}
+function viewPredict(D) {
+  let h = '<div class="stack"><p class="muted">Isi pace, waktu finis terhitung. Atau isi waktu finis, pace terhitung. Contoh: 5K dengan pace 5:00 selesai dalam 25:00. Pace ditulis menit:detik per km, atau menit saja.</p><div class="grid2">';
+  Object.keys(DIST).forEach(k => {
+    const sec = predictTime(D.ev.vdot, DIST[k]);
+    h += '<section class="card"><h2>' + GOAL_NAME[k] + ' <small class="muted">' + fk(DIST[k]) + ' km</small></h2>' +
+      '<div class="form" style="margin-bottom:14px"><label>Pace (per km)<input id="pr-pace-' + k + '" inputmode="decimal" value="' + fmtPace(sec / DIST[k]) + '" autocomplete="off"></label>' +
+      '<label>Waktu finis<input id="pr-time-' + k + '" value="' + fmtTime(sec) + '" autocomplete="off"></label></div>' +
+      '<div id="pr-out-' + k + '">' + predictOut(k, sec, D.ev.vdot) + '</div></section>';
+  });
+  return h + '</div><p class="small muted">Nilai awal adalah prediksi dari kebugaran Anda sekarang. Ubah pace atau waktu untuk mencoba target lain.</p></div>';
+}
+function updatePredict(key, src) {
+  const km = DIST[key], pe = $('pr-pace-' + key), te = $('pr-time-' + key), out = $('pr-out-' + key);
+  let sec;
+  if (src === 'pace') { sec = parseTime(pe.value) * km; if (isFinite(sec) && sec > 0) te.value = fmtTime(sec); }
+  else { sec = parseTime(te.value); if (isFinite(sec) && sec > 0) pe.value = fmtPace(sec / km); }
+  const e = checkEffort(km, sec);
+  if (e) { out.innerHTML = '<p class="err">' + esc(e) + '</p>'; return; }
+  const now = new Date();
+  out.innerHTML = predictOut(key, sec, effectiveVdot(S.profile, S.logs, new Date(now.getFullYear(), now.getMonth(), now.getDate())).vdot);
+}
+
+/* ---------- tab: Profil ---------- */
+function viewProfile(D) {
+  const p = S.profile;
+  const goals = Object.keys(DIST).map(k => [k, GOAL_NAME[k]]);
+  let h = '<div class="grid2"><div class="stack"><form id="profForm" class="card form" novalidate><h2 class="full">Profil pelari</h2>' +
+    (p.demo ? '<p class="full small muted">Nilai di bawah ini contoh. Ganti dengan data Anda lalu simpan.</p>' : '') +
+    '<label>Jarak lomba target<select id="p-goal">' + opts(goals, p.goal) + '</select></label>' +
+    '<label>Tanggal lomba <small>(kosong = rencana standar)</small><input id="p-race" type="date" value="' + esc(p.raceDate || '') + '"></label>' +
+    '<label>Hasil terbaik terakhir: jarak<select id="p-refKey">' + opts(goals, p.refKey) + '</select></label>' +
+    '<label>Hasil terbaik terakhir: waktu<input id="p-refTime" placeholder="52:30 atau 1:45:00" value="' + esc(p.refTime || '') + '"></label>' +
+    '<label>Tanggal hasil itu<input id="p-refDate" type="date" value="' + esc(p.refDate || '') + '"></label>' +
+    '<label>Target waktu <small>(opsional)</small><input id="p-target" placeholder="50:30" value="' + esc(p.targetTime || '') + '"></label>' +
+    '<label>Hari lari per minggu<select id="p-days">' + opts([[3, '3 hari'], [4, '4 hari'], [5, '5 hari'], [6, '6 hari']], p.days) + '</select></label>' +
+    '<label>Jarak lari sekarang (km per minggu)<input id="p-weekly" inputmode="decimal" value="' + esc(p.weeklyKm) + '"></label>' +
+    '<label>Pengalaman<select id="p-level">' + opts([['pemula', 'Pemula (kurang dari 1 tahun)'], ['menengah', 'Menengah (1–3 tahun)'], ['mahir', 'Mahir (lebih dari 3 tahun)']], p.level) + '</select></label>' +
+    '<label>Usia <small>(opsional, untuk zona detak jantung)</small><input id="p-age" inputmode="numeric" value="' + esc(p.age || '') + '"></label>' +
+    '<label>HRmax terukur <small>(opsional)</small><input id="p-hrmax" inputmode="numeric" value="' + esc(p.hrMax || '') + '"></label>' +
+    '<p class="full err" id="p-err" role="alert"></p><div class="full actions"><button class="btn primary" type="submit">Simpan dan buat rencana</button></div></form></div>' +
+    '<div class="stack"><section class="card"><h2>Cadangan data</h2><p class="small muted">Catatan tersimpan di peramban ini saja. Simpan cadangan sebelum membersihkan data situs atau pindah perangkat.</p>' +
+    '<div class="actions" style="margin-top:12px"><button class="btn" type="button" data-act="export">Simpan cadangan</button><label class="btn" style="cursor:pointer">Pulihkan dari berkas<input id="b-file" type="file" accept=".json,application/json" style="display:none"></label></div>' +
+    '<p class="err" id="b-err" role="alert" style="margin-top:10px"></p>' +
+    (UI.backupText ? '<p class="small muted" style="margin:12px 0 6px">Salin teks ini dan simpan di tempat aman:</p><textarea id="b-text" readonly>' + esc(UI.backupText) + '</textarea>' : '') +
+    '<p class="small muted" style="margin:12px 0 6px">Atau tempel teks cadangan di sini:</p><textarea id="b-paste" placeholder="{ ... }"></textarea><div class="actions" style="margin-top:8px"><button class="btn sm" type="button" data-act="import-text">Pulihkan dari teks</button></div></section>' +
+    '<section class="card"><h2>Hapus semua data</h2><p class="small muted">Menghapus profil dan seluruh catatan lari di peramban ini, lalu kembali ke data contoh.</p><div class="actions" style="margin-top:12px">' +
+    (UI.confirmReset ? '<button class="btn danger" type="button" data-act="reset-yes">Ya, hapus semuanya</button><button class="btn" type="button" data-act="reset-no">Batal</button>' : '<button class="btn danger" type="button" data-act="reset-ask">Hapus data</button>') + '</div></section></div></div>';
+  return h;
+}
+
+/* ---------- render ---------- */
+function render() {
+  const D = derive();
+  const toRace = dayDiff(D.today, parseYmd(D.plan.raceDate));
+  $('hdr-meta').innerHTML = 'VDOT <b>' + D.ev.vdot.toFixed(1).replace('.', ',') + '</b><br>' + (toRace >= 0 ? 'Lomba <b>H-' + toRace + '</b>' : 'Lomba <b>selesai</b>');
+  $('tabs').innerHTML = TABS.map(t => '<button class="tab" type="button" role="tab" data-tab="' + t[0] + '" aria-selected="' + (S.tab === t[0]) + '">' + t[1] + '</button>').join('');
+  const V = { today: viewToday, plan: viewPlan, log: viewLog, zones: viewZones, predict: viewPredict, profile: viewProfile }[S.tab] || viewToday;
+  $('view').innerHTML = V(D);
+}
+function setTab(t) {
+  if (S.tab === 'log' && t !== 'log') UI.draft = null;
+  S.tab = t; persist(); render();
+  try { window.scrollTo(0, 0); } catch (e) { /* abaikan */ }
+}
+function toast(msg) {
+  const el = $('toast'); el.textContent = msg; el.classList.add('show');
+  clearTimeout(UI.toastT); UI.toastT = setTimeout(() => el.classList.remove('show'), 5200);
+}
+
+/* ---------- aksi ---------- */
+function sessionToLogType(t) { return { easy: 'easy', recovery: 'easy', long: 'long', medium: 'easy', tempo: 'tempo', interval: 'interval', fartlek: 'interval', racepace: 'interval', race: 'race' }[t] || 'easy'; }
+function updatePace() {
+  const km = num($('l-km').value), sec = parseTime($('l-time').value);
+  $('l-pace').textContent = km > 0 && sec > 0 ? fmtPace(sec / km) + ' /km' : '–';
+}
+function saveLog() {
+  const err = m => { $('l-err').textContent = m; };
+  const date = $('l-date').value, km = num($('l-km').value), sec = parseTime($('l-time').value);
+  const today = ymd(new Date());
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return err('Pilih tanggal lari.');
+  if (date > today) return err('Tanggal lari tidak boleh di masa depan.');
+  if (!(km >= 0.3 && km <= 250)) return err('Jarak harus antara 0,3 dan 250 km.');
+  const e = checkEffort(km, sec); if (e) return err(e);
+  const hr = parseInt($('l-hr').value, 10);
+  const entry = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), date, km: Math.round(km * 100) / 100, sec: Math.round(sec), type: $('l-type').value, rpe: +$('l-rpe').value, pain: +$('l-pain').value, hr: hr >= 60 && hr <= 230 ? hr : 0, note: $('l-note').value.trim().slice(0, 140) };
+  const now = new Date(), t0 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const pbBefore = personalBests(S.logs, S.profile), vBefore = effectiveVdot(S.profile, S.logs, t0).vdot;
+  S.logs.push(entry); UI.draft = null; persist();
+  const pbAfter = personalBests(S.logs, S.profile), vAfter = effectiveVdot(S.profile, S.logs, t0).vdot;
+  let msg = 'Tersimpan: ' + fk(entry.km) + ' km, ' + fmtPace(entry.sec / entry.km) + ' /km.';
+  const key = stdKey(entry.km);
+  if (entry.type === 'race' && key && pbAfter[key] && pbAfter[key].sec === entry.sec && (!pbBefore[key] || entry.sec < pbBefore[key].sec)) msg = 'PB baru di ' + GOAL_NAME[key] + ': ' + fmtTime(entry.sec) + '. ' + msg;
+  if (vAfter - vBefore >= 0.1) msg += ' VDOT naik ' + vBefore.toFixed(1).replace('.', ',') + ' → ' + vAfter.toFixed(1).replace('.', ',') + ', zona dan rencana ikut diperbarui.';
+  render(); toast(msg);
+}
+function saveProfile() {
+  const g = id => $(id).value.trim(), err = m => { $('p-err').textContent = m; };
+  const goal = g('p-goal'), refKey = g('p-refKey'), refTime = g('p-refTime'), refSec = parseTime(refTime);
+  const today = ymd(new Date());
+  let e = checkEffort(DIST[refKey], refSec); if (e) return err('Hasil terbaik: ' + e);
+  const refDate = g('p-refDate') || today;
+  if (refDate > today) return err('Tanggal hasil terbaik tidak boleh di masa depan.');
+  const target = g('p-target');
+  if (target) { e = checkEffort(DIST[goal], parseTime(target)); if (e) return err('Target waktu: ' + e); }
+  const race = g('p-race');
+  if (race && race < today) return err('Tanggal lomba sudah lewat. Pilih tanggal hari ini atau setelahnya, atau kosongkan.');
+  const weekly = num(g('p-weekly'));
+  if (!(weekly >= 0 && weekly <= 250)) return err('Isi jarak lari mingguan sekarang, antara 0 dan 250 km.');
+  const age = g('p-age'), hrMax = g('p-hrmax');
+  if (age && !(+age >= 10 && +age <= 90)) return err('Usia harus antara 10 dan 90.');
+  if (hrMax && !(+hrMax >= 120 && +hrMax <= 230)) return err('HRmax harus antara 120 dan 230 bpm.');
+  S.profile = { demo: false, goal, raceDate: race, refKey, refTime, refDate, targetTime: target, days: +g('p-days'), weeklyKm: weekly, level: g('p-level'), age, hrMax };
+  S.tab = 'today'; persist(); render();
+  const D = derive(); toast('Rencana dibuat: ' + D.plan.n + ' minggu menuju ' + GOAL_NAME[goal] + '.');
+  try { window.scrollTo(0, 0); } catch (x) { /* abaikan */ }
+}
+async function doExport() {
+  const json = JSON.stringify({ app: 'garis-finis', v: 1, profile: S.profile, logs: S.logs }, null, 1);
+  try {
+    const dl = window.claude && window.claude.use ? await window.claude.use('downloads') : null;
+    if (dl) { await dl.save({ filename: 'garis-finis-cadangan.json', data: json }); toast('Cadangan siap disimpan.'); return; }
+  } catch (e) { if (e && e.code === 'declined') return; }
+  UI.backupText = json; render();
+  toast('Unduhan tidak tersedia di sini. Salin teks cadangan di bawah.');
+}
+function restoreFrom(text) {
+  const err = m => { const el = $('b-err'); if (el) el.textContent = m; };
+  let o; try { o = JSON.parse(text); } catch (e) { return err('Teks bukan JSON yang valid.'); }
+  if (!o || !o.profile || !DIST[o.profile.goal] || !DIST[o.profile.refKey] || !Array.isArray(o.logs)) return err('Isi cadangan tidak dikenali.');
+  const logs = o.logs.filter(l => l && /^\d{4}-\d{2}-\d{2}$/.test(l.date) && l.km > 0 && l.sec > 0).map(l => ({ id: String(l.id || Math.random().toString(36).slice(2)), date: l.date, km: +l.km, sec: +l.sec, type: String(l.type || 'other'), rpe: clamp(+l.rpe || 5, 1, 10), pain: clamp(+l.pain || 0, 0, 3), hr: +l.hr || 0, note: String(l.note || '').slice(0, 140) }));
+  S.profile = Object.assign({}, o.profile, { demo: false }); S.logs = logs; S.tab = 'today'; persist(); render();
+  toast('Data dipulihkan: ' + logs.length + ' lari.');
+}
+const ACT = {
+  'log-planned'() {
+    const D = derive(), hit = sessionOn(D.plan, D.today);
+    if (hit) UI.draft = { date: D.todayStr, km: hit.day.session.km, type: sessionToLogType(hit.day.session.type) };
+    setTab('log');
+  },
+  'del-ask'(t) { UI.confirmDel = t.dataset.id; render(); },
+  'del-no'() { UI.confirmDel = null; render(); },
+  'del-yes'(t) { S.logs = S.logs.filter(l => l.id !== t.dataset.id); UI.confirmDel = null; persist(); render(); toast('Catatan dihapus.'); },
+  'export'() { doExport(); },
+  'import-text'() { const el = $('b-paste'); if (el && el.value.trim()) restoreFrom(el.value); else { const e = $('b-err'); if (e) e.textContent = 'Tempel teks cadangan dulu.'; } },
+  'reset-ask'() { UI.confirmReset = true; render(); },
+  'reset-no'() { UI.confirmReset = false; render(); },
+  'reset-yes'() { store.clear(); UI.confirmReset = false; UI.backupText = ''; S = { profile: demoProfile(new Date()), logs: [], tab: 'today' }; render(); toast('Data dihapus. Menampilkan data contoh.'); }
+};
+
+function boot() {
+  document.addEventListener('click', e => {
+    const t = e.target.closest('[data-tab],[data-act]'); if (!t) return;
+    if (t.dataset.tab) { setTab(t.dataset.tab); return; }
+    if (ACT[t.dataset.act]) ACT[t.dataset.act](t);
+  });
+  document.addEventListener('submit', e => {
+    e.preventDefault();
+    if (e.target.id === 'logForm') saveLog(); else if (e.target.id === 'profForm') saveProfile();
+  });
+  document.addEventListener('input', e => {
+    const id = e.target.id;
+    if (id === 'l-rpe') $('l-rpe-o').textContent = e.target.value;
+    else if (id === 'l-km' || id === 'l-time') updatePace();
+    else if (id.indexOf('pr-pace-') === 0) updatePredict(id.slice(8), 'pace');
+    else if (id.indexOf('pr-time-') === 0) updatePredict(id.slice(8), 'time');
+  });
+  document.addEventListener('change', e => {
+    if (e.target.id === 'b-file' && e.target.files && e.target.files[0]) {
+      const fr = new FileReader();
+      fr.onload = () => restoreFrom(String(fr.result));
+      fr.readAsText(e.target.files[0]);
+    }
+  });
+  render();
+}
+if (typeof document !== 'undefined' && document.getElementById && document.getElementById('view')) boot();
+
+</script>
+
+</body></html>
